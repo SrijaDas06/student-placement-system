@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title if title else "Student Placement System" }}</title>
+
+    <!-- Tailwind CSS CDN (No npm needed) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6",
+                        secondary: "#10b981",
+                        accent: "#f59e0b"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-primary">Placement Portal</h1>
+
+        <div class="hidden md:flex space-x-6 font-medium">
+            <a href="/" class="hover:text-primary">Home</a>
+            <a href="/login" class="hover:text-primary">Login</a>
+            <a href="/register" class="hover:text-primary">Register</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="menu-btn md:hidden bg-primary text-white px-4 py-2 rounded-lg">
+            Menu
+        </button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="nav-links hidden flex-col bg-white md:hidden px-6 py-4 space-y-2 shadow">
+        <a href="/" class="block">Home</a>
+        <a href="/login" class="block">Login</a>
+        <a href="/register" class="block">Register</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="p-6">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

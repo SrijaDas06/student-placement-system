@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Companies{% endblock %}
+
+{% block content %}
+<h2>Manage Companies</h2>
+
+<div class="mb-4">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+        Add New Company
+    </button>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for company in companies %}
+        <tr>
+            <td>{{ company.id }}</td>
+            <td>{{ company.name }}</td>
+            <td>{{ company.created_at.strftime('%Y-%m-%d') if company.created_at else 'N/A' }}</td>
+            <td>
+                <a href="/admin/jobs?company={{ company.id }}" class="btn btn-sm btn-info">View Jobs</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Add Company Modal -->
+<div class="modal fade" id="addCompanyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Company</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="addCompanyForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Company Name</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Company</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('addCompanyForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.querySelector('input[name="name"]').value;
+    const description = document.querySelector('textarea[name="description"]').value;
+    
+    const response = await fetch('/admin/company', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description })
+    });
+    
+    if (response.ok) {
+        alert('Company added successfully!');
+        location.reload();
+    } else {
+        alert('Error adding company');
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2 class="text-3xl font-bold mb-6 text-gray-800">Add New Job</h2>
+
+<div class="max-w-lg mx-auto bg-white p-6 rounded-xl shadow">
+    <form action="/admin/jobs/add" method="POST" class="space-y-4">
+
+        <div>
+            <label class="font-medium">Job Title</label>
+            <input type="text" name="title" required class="input">
+        </div>
+
+        <div>
+            <label class="font-medium">Company</label>
+            <input type="text" name="company" required class="input">
+        </div>
+
+        <div>
+            <label class="font-medium">Salary</label>
+            <input type="text" name="salary" required class="input">
+        </div>
+
+        <div>
+            <label class="font-medium">Description</label>
+            <textarea name="description" required class="input h-28"></textarea>
+        </div>
+
+        <button class="w-full bg-primary text-white py-2 rounded-lg">Add Job</button>
+    </form>
+</div>
+
+{% endblock %}

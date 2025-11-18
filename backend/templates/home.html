@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Home - Placement Portal{% endblock %}
+{% block content %}
+<div class="text-center">
+  <h1>Welcome to Student Placement Portal</h1>
+  <p class="lead">Students: view jobs and apply. Admin: manage drives and companies.</p>
+  <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Get Started</a>
+</div>
+{% endblock %}

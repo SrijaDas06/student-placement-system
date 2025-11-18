@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<h2>Student Profile - {{ user.name }}</h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h5>Personal</h5>
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Role:</strong> {{ user.role }}</p>
+      <p><strong>Joined:</strong> {{ user.created_at.strftime('%Y-%m-%d') if user.created_at else 'N/A' }}</p>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h5>Profile</h5>
+      {% if profile %}
+        <p><strong>Department:</strong> {{ profile.department or 'N/A' }}</p>
+        <p><strong>Year:</strong> {{ profile.year or 'N/A' }}</p>
+        <p><strong>CGPA:</strong> {{ profile.cgpa or 'N/A' }}</p>
+        <p><strong>Resume:</strong>
+          {% if profile.resume_link %}
+            <a href="{{ profile.resume_link }}" target="_blank">View Resume</a>
+          {% else %}
+            N/A
+          {% endif %}
+        </p>
+      {% else %}
+        <p>No profile available for this user.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<a href="/admin/applications" class="btn btn-secondary mt-3">Back to Applications</a>
+{% endblock %}

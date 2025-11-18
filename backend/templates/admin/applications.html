@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+
+{% block content %}
+<h2>All Applications</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student ID</th>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Applied At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.id }}</td>
+            <td>{{ app.student_id }}</td>
+            <td>{{ app.job.title if app.job else 'N/A' }}</td>
+            <td>{{ app.job.company.name if app.job and app.job.company else 'N/A' }}</td>
+            <td>
+                <select class="form-select form-select-sm" onchange="updateStatus('{{ app.id }}', this.value);">
+                    <option value="Pending" {% if app.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Accepted" {% if app.status == 'Accepted' %}selected{% endif %}>Accepted</option>
+                    <option value="Rejected" {% if app.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+            </td>
+            <td>{{ app.applied_at.strftime('%Y-%m-%d') if app.applied_at else 'N/A' }}</td>
+            <td>
+                <a href="{{ url_for('admin.view_student', user_id=app.student_id) }}" target="_blank" class="btn btn-sm btn-info">View Student</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+async function updateStatus(appId, newStatus) {
+    const response = await fetch(`/admin/application/${appId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+    });
+    
+    if (response.ok) {
+        alert('Status updated successfully!');
+    } else {
+        alert('Error updating status');
+        location.reload();
+    }
+}
+</script>
+{% endblock %}

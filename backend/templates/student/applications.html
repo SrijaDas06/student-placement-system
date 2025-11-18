@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}My Applications{% endblock %}
+
+{% block content %}
+<h2>My Applications</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Applied At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.job.title if app.job else 'N/A' }}</td>
+            <td>{{ app.job.company.name if app.job and app.job.company else 'N/A' }}</td>
+            <td>
+                {% if app.status == 'Pending' %}
+                    <span class="badge bg-warning">Pending</span>
+                {% elif app.status == 'Accepted' %}
+                    <span class="badge bg-success">Accepted</span>
+                {% elif app.status == 'Rejected' %}
+                    <span class="badge bg-danger">Rejected</span>
+                {% endif %}
+            </td>
+            <td>{{ app.applied_at.strftime('%Y-%m-%d') if app.applied_at else 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if not applications %}
+<div class="alert alert-info">You haven't applied to any jobs yet.</div>
+{% endif %}
+
+<a href="/student/dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+{% endblock %}

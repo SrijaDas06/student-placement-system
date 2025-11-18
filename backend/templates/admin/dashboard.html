@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Students</h5>
+            <h2>{{ stats.students }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Companies</h5>
+            <h2>{{ stats.companies }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Jobs</h5>
+            <h2>{{ stats.jobs }}</h2>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center p-3">
+            <h5>Applications</h5>
+            <h2>{{ stats.applications }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="/admin/companies" class="btn btn-primary">Manage Companies</a>
+    <a href="/admin/add_job" class="btn btn-secondary ms-2">Add Job</a>
+    <a href="/admin/jobs" class="btn btn-info ms-2">View Jobs</a>
+    <a href="/admin/applications" class="btn btn-success ms-2">View Applications</a>
+</div>
+{% endblock %}

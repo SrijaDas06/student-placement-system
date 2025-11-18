@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Available Jobs{% endblock %}
+
+{% block content %}
+<h2>Available Jobs</h2>
+
+{% if request.args.get('success') %}
+<div class="alert alert-success">{{ request.args.get('success') }}</div>
+{% endif %}
+
+{% if request.args.get('error') %}
+<div class="alert alert-danger">{{ request.args.get('error') }}</div>
+{% endif %}
+
+<div class="row">
+    {% for job in jobs %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ job.title }}</h5>
+                <p class="card-text"><strong>Company:</strong> {{ job.company.name if job.company else 'N/A' }}</p>
+                <p class="card-text"><strong>Salary:</strong> {{ job.salary if job.salary else 'Not specified' }}</p>
+                <p class="card-text"><strong>Description:</strong> {{ job.description if job.description else 'No description' }}</p>
+                <p class="card-text"><small class="text-muted">Posted: {{ job.posted_at.strftime('%Y-%m-%d') if job.posted_at else 'N/A' }}</small></p>
+                
+                <form method="POST" action="/student/apply/{{ job.id }}" style="display:inline;">
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </form>
+                <a href="/student/dashboard" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not jobs %}
+<div class="alert alert-info">No jobs available at this moment.</div>
+{% endif %}
+
+{% endblock %}
