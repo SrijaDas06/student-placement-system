@@ -3,13 +3,10 @@ from models import db
 from routes.auth import auth
 from routes.student import student
 from routes.admin import admin
+from config import Config
 
 app = Flask(__name__)
-app.secret_key = "your-secret-key"
-
-# DATABASE CONFIG
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///placement.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config.from_object(Config)
 
 db.init_app(app)
 
